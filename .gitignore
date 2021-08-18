@@ -4,4 +4,8 @@ node_modules
 /server/build
 /public/build
 
+/app/styles
+
 .vercel
+
+.npmrc

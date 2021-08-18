@@ -1,5 +1,3 @@
-/* purgecss start ignore */
-
 :focus:not(:focus-visible) {
   outline: none;
 }
@@ -13,5 +11,3 @@ footer {
   color: #ccc;
   padding-top: 80px;
 }
-
-/* purgecss end ignore */
