@@ -19,8 +19,10 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - name: Build CSS PostCSS/Tailwind
         run: npm run build:css
+
       - name: Build Remix App
         run: |
           npm ci
