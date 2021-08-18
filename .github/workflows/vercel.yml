@@ -22,6 +22,8 @@ jobs:
 
       - name: Build CSS PostCSS/Tailwind
         run: npm run build:css
+        env:
+          REMIX_TOKEN: ${{ secrets.REMIX_TOKEN }}
 
       - name: Build Remix App
         run: |
