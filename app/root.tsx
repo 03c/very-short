@@ -21,7 +21,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body class="bg-yellow-200">
+      <body className="bg-yellow-200">
         {children}
 
         <Scripts />
