@@ -1,11 +1,11 @@
-import type { LinksFunction, LoaderFunction } from "remix";
-import { Meta, Links, Scripts, useRouteData, LiveReload } from "remix";
-import { Outlet } from "react-router-dom";
+import type { LinksFunction, LoaderFunction } from 'remix';
+import { Meta, Links, Scripts, useRouteData, LiveReload } from 'remix';
+import { Outlet } from 'react-router-dom';
 
-import stylesUrl from "./styles/global.css";
+import stylesUrl from './styles/global.css';
 
 export let links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: stylesUrl }];
+  return [{ rel: 'stylesheet', href: stylesUrl }];
 };
 
 export let loader: LoaderFunction = async () => {
@@ -21,11 +21,11 @@ function Document({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body class="bg-yellow-200">
         {children}
 
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
       </body>
     </html>
   );
@@ -36,7 +36,7 @@ export default function App() {
   return (
     <Document>
       <Outlet />
-      <footer>
+      <footer className="container flex justify-center p-4">
         <p>This page was rendered at {data.date.toLocaleString()}</p>
       </footer>
     </Document>
