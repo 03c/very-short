@@ -20,6 +20,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: NPM install
+        run: npm install
+        env:
+          REMIX_TOKEN: ${{ secrets.REMIX_TOKEN }}
+
       - name: Build CSS PostCSS/Tailwind
         run: npm run build:css
         env:
