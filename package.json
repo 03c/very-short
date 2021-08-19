@@ -20,7 +20,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^6.0.0-beta.0",
-    "remix": "^0.17.5"
+    "remix": "^0.17.5",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@remix-run/dev": "^0.17.5",
