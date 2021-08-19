@@ -31,9 +31,6 @@ export default function App() {
   return (
     <Document>
       <Outlet />
-      <footer className="container flex justify-center p-4">
-        <p></p>
-      </footer>
     </Document>
   );
 }

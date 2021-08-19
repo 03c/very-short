@@ -20,6 +20,15 @@ export default function Index() {
       <header className="text-2xl">Very Short</header>
       <p>Shorten any URL in one simple step...</p>
       <Outlet />
+      <footer className="container flex justify-center p-4">
+        <p>
+          source available on{' '}
+          <a href="https://gtihub/03c/very-short" target="_blank">
+            GitHub
+          </a>{' '}
+          | terms
+        </p>
+      </footer>
     </div>
   );
 }
