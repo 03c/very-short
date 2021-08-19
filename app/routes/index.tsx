@@ -72,6 +72,9 @@ export let action: ActionFunction = async ({ request }) => {
 
 export default function Index() {
   let { url } = useRouteData();
+
+  
+
   return (
     <>
       <Form
@@ -99,12 +102,21 @@ export default function Index() {
           </>
         )}
         {url && (
-          <div className="m-4 p-4 flex justify-center bg-blue-200">
-            Your new Very Short URL is:&nbsp;
-            <a href={url} target="_blank">
-              {url}
-            </a>
-          </div>
+          <>
+            <div className="m-4 p-4 flex justify-center bg-blue-200">
+              Your new Very Short URL is:&nbsp;
+              <a href={url} target="_blank">
+                {url}
+              </a>
+            </div>
+            <button
+              type="button"
+              className="m-4 p-4 pl-6 pr-6 bg-green-400"
+              onClick={refresh}
+            >
+              Another?
+            </button>
+          </>
         )}
       </Form>
     </>
