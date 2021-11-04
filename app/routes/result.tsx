@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { LoaderFunction, redirect, json, useRouteData } from 'remix';
-import { getSession, commitSession } from '../../session';
+import { LoaderFunction, redirect, json, useLoaderData } from 'remix';
+import { getSession, commitSession } from '../session';
 import Button from '../components/button';
 
 export let loader: LoaderFunction = async ({ request }) => {
@@ -23,7 +23,7 @@ export let loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Index() {
-  let { url } = useRouteData();
+  let data = useLoaderData();
   let navigate = useNavigate();
 
   const goBack = () => {
@@ -34,8 +34,8 @@ export default function Index() {
     <>
       <div className="m-4 p-4 flex justify-center bg-blue-200">
         Your new Very Short URL is:&nbsp;
-        <a href={url} target="_blank">
-          {url}
+        <a href={data.url} target="_blank">
+          {data.url}
         </a>
       </div>
       <Button type="button" onClick={goBack}>

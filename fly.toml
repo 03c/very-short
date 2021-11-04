@@ -1,9 +1,10 @@
-# fly.toml file generated for red-breeze-7488 on 2021-08-20T14:04:54+01:00
+# fly.toml file generated for floral-smoke-1296 on 2021-09-15T15:51:44+01:00
 
-app = "red-breeze-7488"
+app = "floral-smoke-1296"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
+processes = []
 
 [build]
   builder = "heroku/buildpacks:20"
@@ -18,6 +19,7 @@ kill_timeout = 5
 [[services]]
   http_checks = []
   internal_port = 8080
+  processes = ["app"]
   protocol = "tcp"
   script_checks = []
 

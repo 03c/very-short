@@ -1,10 +1,10 @@
 import type { LoaderFunction } from 'remix';
 import { redirect } from 'remix';
 import Hashids from 'hashids';
-import Database from '../../database';
+import Database from '../database';
 
 export let loader: LoaderFunction = async ({ params }) => {
-  const hash = params.hash;
+  const hash = params.hash || '';
 
   const hasher = new Hashids(
     process.env.HASH_SALT || 'devsalt',

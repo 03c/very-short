@@ -1,7 +1,17 @@
-import type { MetaFunction, LinksFunction } from 'remix';
-
-import stylesUrl from '../styles/index.css';
-import { Outlet } from 'react-router-dom';
+import {
+  MetaFunction,
+  ActionFunction,
+  Form,
+  json,
+  LoaderFunction,
+  redirect,
+  useActionData,
+} from 'remix';
+import { getSession, commitSession } from '../session';
+import Hashids from 'hashids';
+import Database from '../database';
+import Button from '../components/button';
+import validator from 'validator';
 
 export let meta: MetaFunction = () => {
   return {
@@ -10,25 +20,78 @@ export let meta: MetaFunction = () => {
   };
 };
 
-export let links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: stylesUrl }];
+export let loader: LoaderFunction = async ({ request }) => {
+  let session = await getSession(request.headers.get('Cookie'));
+  let error = session.get('error') || null;
+
+  return json(
+    { error },
+    {
+      headers: {
+        'Set-Cookie': await commitSession(session),
+      },
+    }
+  );
+};
+
+export let action: ActionFunction = async ({ request }) => {
+  // get existing session cookie
+  let session = await getSession(request.headers.get('Cookie'));
+
+  // get url
+  let url = new URLSearchParams(await request.text()).get('url') || '';
+
+  //Validation schema
+  const isValid = await validator.isURL(url);
+
+  //return error if not valid
+  if (!isValid) {
+    return json({ error: `Please enter a valid URL.` });
+  }
+
+  const redirectDb = await Database.redirect.create({
+    data: {
+      redirect_to: url,
+    },
+  });
+
+  //get hash from db index
+  const hasher = new Hashids(
+    process.env.HASH_SALT || 'devsalt',
+    parseInt(process.env.HASH_LENGTH || '5', 10)
+  );
+
+  let hash = hasher.encode(redirectDb.id);
+
+  session.flash('url', `https://${process.env.DOMAIN}/${hash}`);
+
+  return redirect('/result', {
+    headers: {
+      'Set-Cookie': await commitSession(session),
+    },
+  });
 };
 
 export default function Index() {
+  let data = useActionData();
   return (
-    <div className="container grid gap-4 mt-4 justify-items-center">
-      <header className="text-2xl">Very Short</header>
-      <p>Shorten any URL in one simple step...</p>
-      <Outlet />
-      <footer className="container flex justify-center p-4">
-        <p>
-          source available on{' '}
-          <a href="https://gtihub/03c/very-short" target="_blank">
-            GitHub
-          </a>{' '}
-          | terms
-        </p>
-      </footer>
-    </div>
+    <>
+      <Form method="post" className="w-1/2">
+        {data && (
+          <div className="bg-red w-full flex justify-center p-4 mt-4 mb-4">
+            {data.error}
+          </div>
+        )}
+        <div className="w-full flex justify-center">
+          <input
+            type="text"
+            name="url"
+            placeholder="Shorten your long URL"
+            className="p-4 w-full"
+          ></input>
+          <Button type="submit">Shorten</Button>
+        </div>
+      </Form>
+    </>
   );
 }
