@@ -1,0 +1,8 @@
+/node_modules
+.github
+/var
+.env
+.dockerignore
+Dockerfile
+docker-compose.yml
+fly.toml

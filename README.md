@@ -16,7 +16,7 @@ It is then recommended to edit the .env file to your liking.
 
 ## Launch containers
 
-`docker compose up`
+`docker compose up -d`
 
 # Database
 
