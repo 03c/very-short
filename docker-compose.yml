@@ -15,9 +15,12 @@ services:
       - .env
     environment:
         DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres_container:5432/${POSTGRES_DB}
+        CHOKIDAR_USEPOLLING: "true"
     ports:
       - '3000:3000'
       - '8002:8002'
+    volumes:
+      - .:/app
 
   db:
     container_name: postgres_container
@@ -53,3 +56,4 @@ services:
 volumes:
   db-data:
   pgadmin-data:
+  node_modules:

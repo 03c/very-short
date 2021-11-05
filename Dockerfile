@@ -1,20 +1,20 @@
 FROM node:14
 
-ARG REMIX_TOKEN
+# ARG REMIX_TOKEN
 
 WORKDIR /app
 
-COPY package*.json .npmrc ./
-COPY .npmrc ./
-COPY prisma ./prisma
+# COPY package*.json .npmrc ./
+# COPY .npmrc ./
+# COPY prisma ./prisma
 
-RUN npm install
+# RUN npm install
 
-COPY ./ ./
+# COPY ./ ./
 
-RUN npm run postinstall
+# RUN npm run postinstall
 
 EXPOSE 3000
 EXPOSE 8002
 
-CMD npm run dev
+CMD npm install && npm run postinstall && npm run dev
