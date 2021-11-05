@@ -46,6 +46,8 @@ To add a migration it is first required that you make the necessary changes to t
 
 e.g. `npx prisma migrate dev --name add_user_table`
 
+TODO: this section needs updating, as these commands need to be run in the docker container.
+
 # Debugging
 
 TODO: Finsih this section.
