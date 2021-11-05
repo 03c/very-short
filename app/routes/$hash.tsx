@@ -11,13 +11,17 @@ export let loader: LoaderFunction = async ({ params }) => {
     parseInt(process.env.HASH_LENGTH || '5', 10)
   );
 
-  let id = hasher.decode(hash);
+  let id = hasher.decode(hash)[0] as number;
 
-  const { data, error } = await Database.from('urls')
-    .select('redirect_to')
-    .eq('id', id);
+  const result = await Database.redirect.findUnique({
+    where: { id: id },
+  });
 
-  return redirect(data && data[0]['redirect_to']);
+  if (result?.redirect_to === null) {
+    redirect('/404');
+  }
+
+  return redirect((result && result.redirect_to) || '');
 };
 
 export default function Index() {
