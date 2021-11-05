@@ -31,7 +31,7 @@ function Document({
           <footer className="container flex justify-center p-4">
             <p>
               source available on{' '}
-              <a href="https://gtihub.com/03c/very-short" target="_blank">
+              <a href="https://github.com/03c/very-short" target="_blank">
                 GitHub
               </a>{' '}
               | terms | Chris Child
