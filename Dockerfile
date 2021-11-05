@@ -15,5 +15,6 @@ COPY ./ ./
 RUN npm run postinstall
 
 EXPOSE 3000
+EXPOSE 8002
 
 CMD npm run dev
