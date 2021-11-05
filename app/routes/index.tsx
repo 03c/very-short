@@ -49,7 +49,12 @@ export let action: ActionFunction = async ({ request }) => {
     return json({ error: `Please enter a valid URL.` });
   }
 
-  const redirectDb = await Database.redirect.create({
+  //assume http if not specified
+  if (!url.startsWith('http')) {
+    url = `http://${url}`;
+  }
+
+  let result = await Database.redirect.create({
     data: {
       redirect_to: url,
     },
@@ -61,7 +66,13 @@ export let action: ActionFunction = async ({ request }) => {
     parseInt(process.env.HASH_LENGTH || '5', 10)
   );
 
-  let hash = hasher.encode(redirectDb.id);
+  let hash = hasher.encode(result.id);
+
+  //update the database with the hash
+  result = await Database.redirect.update({
+    where: { id: result.id },
+    data: { hash: hash },
+  });
 
   session.flash('url', `https://${process.env.DOMAIN}/${hash}`);
 
