@@ -6,12 +6,16 @@ import {
   LoaderFunction,
   redirect,
   useActionData,
+  useLoaderData,
 } from 'remix';
-import { getSession, commitSession } from '../session';
+import { useNavigate } from 'react-router';
+import { getSession, commitSession } from '../services/session';
 import Hashids from 'hashids';
-import Database from '../database';
+import Database from '../services/database';
 import Button from '../components/button';
 import validator from 'validator';
+import { authenticator } from '~/services/auth.server';
+import { User } from '~/models/user';
 
 export let meta: MetaFunction = () => {
   return {
@@ -21,17 +25,12 @@ export let meta: MetaFunction = () => {
 };
 
 export let loader: LoaderFunction = async ({ request }) => {
+  let user = await authenticator.isAuthenticated(request);
+
   let session = await getSession(request.headers.get('Cookie'));
   let error = session.get('error') || null;
 
-  return json(
-    { error },
-    {
-      headers: {
-        'Set-Cookie': await commitSession(session),
-      },
-    }
-  );
+  return { user, error };
 };
 
 export let action: ActionFunction = async ({ request }) => {
@@ -84,7 +83,9 @@ export let action: ActionFunction = async ({ request }) => {
 };
 
 export default function Index() {
+  let loaderData = useLoaderData<{ user: User }>();
   let data = useActionData();
+  let navigate = useNavigate();
   return (
     <>
       <Form method="post" className="w-1/2">
@@ -103,6 +104,17 @@ export default function Index() {
           <Button type="submit">Shorten</Button>
         </div>
       </Form>
+      {loaderData.user && <div>Logged In: {loaderData.user.email}</div>}
+      {!loaderData.user && (
+        <Button
+          type="button"
+          onClick={function () {
+            navigate('/login/');
+          }}
+        >
+          Login
+        </Button>
+      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { LoaderFunction, redirect, json, useLoaderData } from 'remix';
-import { getSession, commitSession } from '../session';
+import { getSession, commitSession } from '../services/session';
 import Button from '../components/button';
 
 export let loader: LoaderFunction = async ({ request }) => {

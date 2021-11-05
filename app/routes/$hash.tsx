@@ -1,7 +1,7 @@
 import type { LoaderFunction } from 'remix';
 import { redirect } from 'remix';
 import Hashids from 'hashids';
-import Database from '../database';
+import Database from '../services/database';
 
 export let loader: LoaderFunction = async ({ params }) => {
   const hash = params.hash || '';
