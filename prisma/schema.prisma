@@ -10,4 +10,5 @@ generator client {
 model Redirect {
   id    Int    @id @default(autoincrement())
   redirect_to  String
+  hash         String @default("")
 }
