@@ -35,6 +35,7 @@ function Document({
                 GitHub
               </a>{' '}
               | terms
+              | Chris Child
             </p>
           </footer>
         </div>
